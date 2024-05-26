@@ -17,9 +17,14 @@ if (!isset($_GET["projectID"])) {
     $projectID = $_GET['projectID'];
     $query = "SELECT * FROM project WHERE id =$projectID ;";
     $result = mysqli_query($db, $query) or die(mysqli_error($db));
-    $projectName = mysqli_fetch_assoc($result)["name"];
+    $projectData = mysqli_fetch_assoc($result);
+    $projectName = $projectData["name"];
+    $projectOpenerID = $projectData["opener"];
 
-    $query = "SELECT username FROM student, project WHERE student.id = project.opener";
+    echo " <script>console.log('projectID : , openerID = ')</script>";
+
+
+    $query = "SELECT username FROM student, project WHERE student.id = '$projectOpenerID'";
     $result = mysqli_query($db, $query) or die(mysqli_error($db));
     $projectOpener = mysqli_fetch_assoc($result)["username"];
 
