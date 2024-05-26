@@ -1,0 +1,29 @@
+.postDiv {
+    display: flex;
+    flex-direction: row;
+    height: 20rem;
+
+    max-width: 50%;
+
+    border: solid red 1px;
+}
+
+.postDiv>p {
+    height: 10em;
+    overflow: scroll;
+}
+
+.postBodyDiv {
+    flex: 2;
+}
+
+.interactionDiv {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.commentDiv {
+    flex: 5;
+    overflow: scroll;
+}

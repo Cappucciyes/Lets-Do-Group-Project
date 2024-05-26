@@ -12,6 +12,15 @@
         <div id="bodyLeft">
             <?php
             session_start();
+
+            // how do I call this fucntion via button?
+            function logOut()
+            {
+                unset($_SESSION["currentUser"]);
+                header("Location : homepage.php");
+                die();
+            }
+
             if (!isset($_SESSION["currentUser"]))
                 echo "<div><a href='login.php'>Log In!</a></div><br><div><a href='signup.php'>Sign Up!</a></div>";
             else {

@@ -41,7 +41,6 @@ mysqli_query($db, $query) or die(mysqli_error($db));
 //create comment table
 $query = "CREATE TABLE comment (
         id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        groupID INTEGER UNSIGNED NOT NULL,
         authorID INTEGER UNSIGNED NOT NULL,
         postID INTEGER UNSIGNED NOT NULL,
         body TEXT NOT NULL 
