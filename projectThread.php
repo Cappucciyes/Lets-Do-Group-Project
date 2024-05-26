@@ -81,6 +81,7 @@ if (!isset($_SESSION["currentUser"])) {
                 </div>
                         
                 <div class='interactionDiv'>
+                    <h5>Comments:</h5>
                     <div class='commentDiv'>";
         populateComment($db, $postID);
         echo        "</div>";

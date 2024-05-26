@@ -15,6 +15,15 @@
 
 .postBodyDiv {
     flex: 2;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+}
+
+.postBodyDiv>p {
+    border: dashed black 1px;
+
+    margin: 0.2rem;
+    bottom: 0px;
 }
 
 .interactionDiv {
@@ -26,4 +35,8 @@
 .commentDiv {
     flex: 5;
     overflow: scroll;
+
+    border: solid black 1px;
+    margin: 0.2rem;
+    padding: 0.2rem;
 }

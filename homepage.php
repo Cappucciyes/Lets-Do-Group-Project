@@ -5,7 +5,11 @@
 </head>
 
 <body>
-    <div id="navBar" style="width: 100%; background-color: gray; text-align: center;"> This is nav bar working in progress</div>
+    <div id="navBar" style="width: 100%; background-color: gray; text-align: center;">
+        <a href="homepage.php">Homepage</a>
+        <a href="homepage.php">Homepage</a>
+        <a href="homepage.php">Homepage</a>
+    </div>
 
     <div id="bodyMain">
         <div class="padding"></div>

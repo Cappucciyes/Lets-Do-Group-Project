@@ -46,6 +46,14 @@ $query = "CREATE TABLE comment (
         body TEXT NOT NULL 
         )ENGINE=MyISAM;";
 mysqli_query($db, $query) or die(mysqli_error($db));
+
+$query = "CREATE TABLE invite (
+        id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        authorID INTEGER UNSIGNED NOT NULL,
+        groupID INTEGER UNSIGNED NOT NULL,
+        body TEXT NOT NULL 
+        )ENGINE=MyISAM;";
+mysqli_query($db, $query) or die(mysqli_error($db));
 // INSERT INTO student (username, password) VALUES ('test3', '3333'), ('test4', '4444'), ('test5', '5555'),('test6', '6666'),('test7', '7777'),('test8', '5555');
 // INSERT INTO project (opener, name, isPublic) VALUES (1, 'test1', false), (1,'test2', false), (1, 'test3', true);
 // INSERT INTO projectmembers (groupID, memberID) VALUES (2, 1), (3, 1), (4, 1), (1, 5), (2, 13);
