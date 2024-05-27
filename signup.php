@@ -13,6 +13,19 @@
             <input type="password" name="password" id="passwordInput" required>
             <label for="passwordCheck">Check password</label>
             <input type="password" name="passwordCheck" id="passwordCheckInput" required>
+
+            <fieldset>
+                <legend>Personal Info: </legend>
+                <label for="firstName">First Name</label>
+                <input type="text" maxlength="255" name="firstName" required>
+                <br>
+                <label for="lastName">Last Name</label>
+                <input type="text" maxlength="255" name="lastName" required>
+                <br>
+                <label for="email">Email:</label>
+                <input type="email" name="email">
+            </fieldset>
+
             <button type="submit" id="submitButton">Create New Account!</button>
         </div>
     </form>
@@ -37,9 +50,24 @@
 
         $newUsername = $_POST["username"];
         $newPassword = $_POST["password"];
-        echo "successfully got username:$newUsername, password:$newPassword";
-        $query = "INSERT INTO student (username, password) values ('$newUsername', '$newPassword')";
-        mysqli_query($db, $query) or die(mysqli_error($db));
+        $inputFirstName = $_POST["firstName"];
+        $inputLastName = $_POST["lastName"];
+        $inputEmail = $_POST["email"];
+
+        $checkIDduplicateQuery = "SELECT * from student where username = '$newUsername'";
+        $duplicateResult = mysqli_query($db, $checkIDduplicateQuery) or die(mysqli_error($db));
+
+        if (mysqli_num_rows($duplicateResult) > 0) {
+            echo "<script>confirm('Username already taken')</script>";
+        } else {
+            echo "successfully got username:$newUsername, password:$newPassword";
+            if ($inputEmail == '' || trim($inputEmail) == '') {
+                $query = "INSERT INTO student (username, password, firstName, lastName) values ('$newUsername', '$newPassword', '$inputFirstName', '$inputLastName')";
+            } else {
+                $query = "INSERT INTO student (username, password, firstName, lastName, email) values ('$newUsername', '$newPassword', '$inputFirstName', '$inputLastName', '$inputEmail')";
+            }
+            mysqli_query($db, $query) or die(mysqli_error($db));
+        }
     }
     ?>
 

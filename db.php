@@ -11,7 +11,10 @@ mysqli_select_db($db, 'projectSite') or die(mysqli_error($db));
 $query = "CREATE TABLE student (
         id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
-        password VARCHAR(255) NOT NULL 
+        password VARCHAR(255) NOT NULL,
+        firstName varchar(255) NOT NULL,
+        lastName varchar(255) NOT NULL,
+        email varchar(255)
         )ENGINE=MyISAM;";
 mysqli_query($db, $query) or die(mysqli_error($db));
 //create group table

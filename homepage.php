@@ -29,18 +29,36 @@
                 echo "<div><a href='login.php'>Log In!</a></div><br><div><a href='signup.php'>Sign Up!</a></div>";
             else {
                 echo "Welcome!";
-                echo "<a href='createProject.php'>Open New Project!</a>";
+                // Profile
+                $db = mysqli_connect('localhost', 'root', '') or die('Unable to connect. Check your connection parameters.');
+                mysqli_select_db($db, 'projectSite') or die(mysqli_error($db));
+                $currenpUserID =  $_SESSION["currentUser"];
+
+                $getUserDataQuery = "SELECT * from student Where id = '$currenpUserID'";
+                $userData = mysqli_fetch_assoc(mysqli_query($db, $getUserDataQuery));
+
+                if ($userData["email"] == NULL) {
+                    $userData["email"] = "None";
+                }
+
+                echo "<h3>About User</h3>";
+                echo "<div style='display: flex; flex-direction: row; justify-content: space-evenly;'>
+                        <div>Name: " . $userData["lastName"] . ", " . $userData["firstName"] . "</div>
+                        <div>E-mail : " . $userData["email"] . "</div>
+                    </div>";
+                echo "<a href='editProfile.php'><button>Edit Profile!</button></a>";
             }
             ?>
 
         </div>
         <div id="bodyRight">
-            Project On going
+            <?php
+            echo "<a href='createProject.php'>Open New Project!</a><br><br>";
+            ?>
+            Project On going:<br>
             <?php
             if (isset($_SESSION["currentUser"])) {
-                $db = mysqli_connect('localhost', 'root', '') or die('Unable to connect. Check your connection parameters.');
-                mysqli_select_db($db, 'projectSite') or die(mysqli_error($db));
-                $currenpUserID =  $_SESSION["currentUser"];
+
 
                 $query = "SELECT * FROM project WHERE id IN (SELECT groupID FROM projectmembers WHERE memberID = '$currenpUserID') ";
 
