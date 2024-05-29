@@ -42,6 +42,9 @@ if (!isset($_SESSION["currentUser"])) {
 
     echo ": $projectName by : $projectOpener";
 
+    echo "<a href='manageProject.php?projectID=$projectID'>Manage Project!</a>";
+
+
     //populate comment function
     function populateComment($currentDB, $currentPostID)
     {
@@ -100,7 +103,12 @@ if (!isset($_SESSION["currentUser"])) {
         echo    "</div>";
     }
 
-    if ($currentUser == 'guest') {
+    if ($projectData["isClosed"]) {
+        echo "<p>this Project is closed!</p>";
+        if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
+            echo "<br> <p>Would you like to re-open it? </p> <form action='?action=reopen&projectID=$projectID' method='post'><input type='text' name='projectID' value='$projectID' hidden><button style='color: green;'>Reopen!</button></form> ";
+        }
+    } else if ($currentUser == 'guest') {
         echo "Log in to make Post!";
     } else if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
         echo        "<button id='postButton'>Make Posts</button>";
@@ -122,5 +130,17 @@ if (!isset($_SESSION["currentUser"])) {
         window.location.href = "addPost.php?projectID=" + projectID;
     });
 </script>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+    if ($_GET['action'] == 'reopen') {
+        $reopenQuery = "UPDATE project SET isClosed = 0 WHERE id = $projectID";
+        mysqli_query($db, $reopenQuery);
+
+        header("Location: projectThread.php?projectID=$projectID");
+        die();
+    } else if ($_GET["action"] == 'like') { // to do
+    }
+}
+?>
 
 </html>

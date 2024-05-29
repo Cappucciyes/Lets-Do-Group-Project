@@ -42,13 +42,15 @@
                 }
 
                 echo "<h3>About User</h3>";
-                echo "<div style='display: flex; flex-direction: row; justify-content: space-evenly;'>
+                echo "<div style='display: flex; flex-direction: row; justify-content: space-evenly; margin-bottom:1rem;'>
                         <div>Name: " . $userData["lastName"] . ", " . $userData["firstName"] . "</div>
                         <div>E-mail : " . $userData["email"] . "</div>
                     </div>";
                 echo "<a href='editProfile.php'><button>Edit Profile!</button></a>";
             }
             ?>
+
+            <h3>Invites</h3>
 
         </div>
         <div id="bodyRight">
