@@ -62,14 +62,30 @@
             if (isset($_SESSION["currentUser"])) {
 
 
-                $query = "SELECT * FROM project WHERE id IN (SELECT groupID FROM projectmembers WHERE memberID = '$currenpUserID') ";
+                $query = "SELECT * FROM project WHERE id IN (SELECT groupID FROM projectmembers WHERE memberID = '$currenpUserID') AND isClosed = 0";
 
                 $userProjectArr = mysqli_query($db, $query) or die(mysqli_error($db));
 
                 while ($project = mysqli_fetch_assoc($userProjectArr)) {
                     echo "<a href='projectThread.php?projectID=" . $project['id'] . "'>Project name: " . $project["name"] . "</a><br>";
                 }
-            } else {
+            }
+            ?>
+            Project finished!:<br>
+            <?php
+            if (isset($_SESSION["currentUser"])) {
+
+
+                $query = "SELECT * FROM project WHERE id IN (SELECT groupID FROM projectmembers WHERE memberID = '$currenpUserID') AND isClosed = 1";
+
+                $userProjectArr = mysqli_query($db, $query) or die(mysqli_error($db));
+
+                while ($project = mysqli_fetch_assoc($userProjectArr)) {
+                    echo "<a href='projectThread.php?projectID=" . $project['id'] . "'>Project name: " . $project["name"] . "</a><br>";
+                }
+            }
+
+            if (!isset($_SESSION["currentUser"])) {
                 echo "Welcome Guest!";
             }
             ?>

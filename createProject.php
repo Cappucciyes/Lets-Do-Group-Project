@@ -28,9 +28,6 @@ if (!isset($_SESSION["currentUser"])) {
                 <label for="true">No (make it private)</label>
             </fieldset>
 
-            <label for="dueDate">Due Date:</label>
-            <input type="date" name="dueDate">
-
             <button type="submit" id="submitButton">open project</button>
         </div>
     </form>
@@ -59,9 +56,8 @@ if (!isset($_SESSION["currentUser"])) {
         $opener = $_SESSION["currentUser"];
         $name = $_POST["projectName"];
         $isPublic = $_POST["isPublic"];
-        $dueDate = $_POST["dueDate"];
 
-        $query = "INSERT INTO project (opener, name, isPublic, isClosed, dueDate) VALUES ('$opener', '$name', $isPublic, false, '$dueDate')";
+        $query = "INSERT INTO project (opener, name, isPublic, isClosed) VALUES ('$opener', '$name', $isPublic, false)";
         $result = mysqli_query($db, $query) or die(mysqli_error($db));
 
         if ($result) {

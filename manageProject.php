@@ -31,9 +31,17 @@ if (!isset($_GET["projectID"])) {
 </head>
 
 <body class="mainBody">
-    <h2>Change due date</h2>
+    <h1>Managing Projects</h1>
+    <form action="?action=changeDate&projectID=<?php echo $groupID ?>" method='post'>
+        <input type="date" name="newDate" required>
+        <button>Update due date!</button>
+    </form>
     <h2>Manage Members!</h2>
     <h2>Invite Someone!</h2>
+    <form action="?action=sendInvite&projectID=<?php echo $groupID ?>" method='post'>
+        <input type='text' name='invitingID' required>
+        <button>Send Invite!</button>
+    </form>
     <h2>Close Project?</h2>
     <form action="?action=close&projectID=<?php echo $groupID ?>" method='post'>
         <input type='text' name='projectID' value="<?php echo $groupID ?>" hidden>
@@ -52,5 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
         header("Location: projectThread.php?projectID=$groupID");
         die();
+    } else if ($_GET['action'] == 'changeDate') {
     }
 } ?>
