@@ -51,6 +51,34 @@
             ?>
 
             <h3>Invites</h3>
+            <?php
+            if (isset($_SESSION["currentUser"])) {
+                $query = "SELECT * FROM invite WHERE receivedID = $currenpUserID";
+
+                $invitesArr = mysqli_query($db, $query) or die(mysqli_error($db));
+
+                while ($inviteData = mysqli_fetch_assoc($invitesArr)) {
+                    $inviteID = $inviteData['id'];
+                    $groupID = $inviteData["groupID"];
+                    $body = $inviteData["body"];
+                    $senderID = $inviteData["authorID"];
+                    $findSenderQuery = "SELECT username FROM student WHERE id = '$senderID'";
+                    $senderUsername = mysqli_fetch_assoc(mysqli_query($db, $findSenderQuery))['username'];
+                    $findGroupQuery = "SELECT name FROM project WHERE id = '$groupID'";
+                    $groupName = mysqli_fetch_assoc(mysqli_query($db, $findGroupQuery))['name'];
+                    echo "<div style='display: flex; flex-direction: column; border:1px solid black; padding: 0.5rem; margin:0.5rem;'>
+                            <p>$senderUsername invites you to group project : '$groupName'</p>
+                            <p>$body</p>
+                            <form action='acceptInvite.php method='post'>
+                                <input type='text' name='inviteID' value = '$inviteID' hidden>
+                                <button>Accept!</button>
+                            </form>
+                        </div>";
+                }
+            }
+
+            ?>
+
 
         </div>
         <div id="bodyRight">

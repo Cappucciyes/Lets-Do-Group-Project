@@ -32,14 +32,11 @@ if (!isset($_GET["projectID"])) {
 
 <body class="mainBody">
     <h1>Managing Projects</h1>
-    <form action="?action=changeDate&projectID=<?php echo $groupID ?>" method='post'>
-        <input type="date" name="newDate" required>
-        <button>Update due date!</button>
-    </form>
     <h2>Manage Members!</h2>
     <h2>Invite Someone!</h2>
     <form action="?action=sendInvite&projectID=<?php echo $groupID ?>" method='post'>
-        <input type='text' name='invitingID' required>
+        <input type='text' name='invitingUsername' required>
+        <input type="text" placeholder="Send short message along with invites!(255 characters max)" name="body" maxlength="255">
         <button>Send Invite!</button>
     </form>
     <h2>Close Project?</h2>
@@ -60,6 +57,21 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
         header("Location: projectThread.php?projectID=$groupID");
         die();
-    } else if ($_GET['action'] == 'changeDate') {
+    } else if ($_GET['action'] == 'sendInvite') {
+        $invitingUser = $_POST["invitingUsername"];
+        $body = $_POST["body"];
+
+        $findIDQuery = "SELECT id from student WHERE username = '$invitingUser'";
+        $result = mysqli_query($db, $findIDQuery);
+        $queryResult = mysqli_fetch_assoc($result)["id"];
+        if (mysqli_num_rows($result) == 0) {
+            echo "<script>confirm('username does not exist');</script>";
+        } else if ($queryResult == $currentUserID) {
+            echo "<script>confirm('Can't send invites to yourself');</script>";
+        } else {
+            $invitingQuery = "INSERT INTO invite (groupID, authorID, body, receivedID) value ('$groupID', '$currentUserID', '$body', '$queryResult')";
+
+            $result = mysqli_query($db, $invitingQuery);
+        }
     }
 } ?>

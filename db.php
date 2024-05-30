@@ -54,7 +54,8 @@ $query = "CREATE TABLE invite (
         id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
         authorID INTEGER UNSIGNED NOT NULL,
         groupID INTEGER UNSIGNED NOT NULL,
-        body TEXT NOT NULL 
+        body VARCHAR(255) NOT NULL,
+        receivedID INTEGER UNSIGNED NOT NULL
         )ENGINE=MyISAM;";
 mysqli_query($db, $query) or die(mysqli_error($db));
 
