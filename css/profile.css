@@ -1,0 +1,19 @@
+#bodyMain {
+    display: flex;
+    flex-direction: column;
+}
+
+#bodyBottom {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+}
+
+#ongoingDiv,
+#finishedDiv {
+    border: red solid 1px;
+    flex: 1;
+    margin: 0.2rem;
+    padding: 0.2rem;
+}
