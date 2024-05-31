@@ -69,7 +69,7 @@
                     echo "<div style='display: flex; flex-direction: column; border:1px solid black; padding: 0.5rem; margin:0.5rem;'>
                             <p>$senderUsername invites you to group project : '$groupName'</p>
                             <p>$body</p>
-                            <form action='acceptInvite.php method='post'>
+                            <form action='acceptInvite.php' method='post'>
                                 <input type='text' name='inviteID' value = '$inviteID' hidden>
                                 <button>Accept!</button>
                             </form>
