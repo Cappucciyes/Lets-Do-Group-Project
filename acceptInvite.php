@@ -14,7 +14,7 @@ $inviteResult = mysqli_query($db, $inviteQuery);
 
 if ($inviteResult) {
     $deleteQuery = "DELETE FROM invite where id = '$inviteID'";
-    mysqli_query($db, $inviteQuery) or die(mysqli_error($db));
+    mysqli_query($db, $deleteQuery) or die(mysqli_error($db));
 
     header("Location: homepage.php");
     die();

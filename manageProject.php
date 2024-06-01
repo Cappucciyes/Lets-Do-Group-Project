@@ -33,6 +33,12 @@ if (!isset($_GET["projectID"])) {
 <body class="mainBody">
     <h1>Managing Projects</h1>
     <h2>Manage Members!</h2>
+    <?php
+    $findAllMembersQuery = "SELECT * FROM student WHERE id IN (SELECT memberID FROM projectmembers WHERE groupID = '$groupID')";
+    
+    ?>
+
+
     <h2>Invite Someone!</h2>
     <form action="?action=sendInvite&projectID=<?php echo $groupID ?>" method='post'>
         <input type='text' name='invitingUsername' required>
