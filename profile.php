@@ -1,29 +1,42 @@
 <html>
+<?php
+session_start();
+
+if (!isset($_GET["student"])) {
+    echo "<script>
+                    confirm('No user specified (query string for 'student' not set)');
+                    </script>";
+
+    header("Location: homepage.php");
+    die();
+}
+
+?>
 
 <head>
     <link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
-    <div id="navBar" style="width: 100%; background-color: gray; text-align: center;">
-        <a href="homepage.php">Homepage</a>
-        <a href="homepage.php">Homepage</a>
-        <a href="homepage.php">Homepage</a>
-    </div>
 
-    <div id="bodyMain">
+
+    <div class="bodyMain">
+        <div id="navBar" style="width: 100%; background-color: gray; text-align: center;">
+            <a href="homepage.php">Homepage</a>
+            <?php
+            if (!isset($_SESSION["currentUser"])) {
+                $currentUserID = $_SESSION["currentUser"];
+                echo " <a href='profile.php?student=$currentUserID'>Profile</a>
+                    <a href='logout.php'>Log Out</a>";
+            } else {
+            }
+            ?>
+            <a href="login.php">Log in</a>
+            <a href="signup.php">Sign up</a>
+        </div>
         <div id="bodyTop">
             <?php
-            session_start();
 
-            if (!isset($_GET["student"])) {
-                echo "<script>
-                    confirm('No user specified (query string for 'student' not set)');
-                    </script>";
-
-                header("Location: homepage.php");
-                die();
-            }
 
             $profileStudentID = $_GET["student"];
 

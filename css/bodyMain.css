@@ -1,0 +1,14 @@
+.bodyMain {
+    width: 50%;
+    display: relative;
+
+    translate: 50%;
+}
+
+@media all and (max-width : 360) {
+    .bodyMain {
+        width: 100%;
+        border: 1px blue solid;
+        translate: 0%;
+    }
+}

@@ -29,6 +29,7 @@ if (!isset($_SESSION["currentUser"])) {
     $query = "SELECT * FROM project WHERE id =$projectID ;";
     $result = mysqli_query($db, $query) or die(mysqli_error($db));
     $projectData = mysqli_fetch_assoc($result);
+
     $projectName = $projectData["name"];
     $projectOpenerID = $projectData["opener"];
 
@@ -42,42 +43,45 @@ if (!isset($_SESSION["currentUser"])) {
 
     echo ": $projectName by : $projectOpener";
 
-    echo "<a href='manageProject.php?projectID=$projectID'>Manage Project!</a>";
 
-
-    //populate comment function
-    function populateComment($currentDB, $currentPostID)
-    {
-        $findCommentsQuery = "SELECT * FROM comment WHERE postID = $currentPostID ORDER BY id ASC";
-        $commentResult = mysqli_query($currentDB, $findCommentsQuery);
-        while ($commentData = mysqli_fetch_assoc($commentResult)) {
-            echo "<div>";
-            $commentBody = $commentData["body"];
-            $commentAuthorID = $commentData["authorID"];
-            //find comment author username
-            $findCommentAuthorQuery = "SELECT username FROM student WHERE id = $commentAuthorID";
-            $findCommentAuthorResult = mysqli_query($currentDB, $findCommentAuthorQuery) or die(mysqli_error($currentDB));
-            $authorName = mysqli_fetch_assoc($findCommentAuthorResult)["username"];
-            echo "<p style ='padding:0px;'><strong>From : $authorName</strong></p>";
-            echo "<p style ='padding:0px;'>$commentBody</p>";
-            echo "</div>";
+    $isCurrentUserMember = mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0;
+    if (!$isCurrentUserMember && !$projectData["isPublic"]) {
+        echo "<br>This is a private project. You need to be a member first to see the content<br>";
+        echo "<a href='homepage.php'>Go back to homepage</a>";
+    } else {
+        //populate comment function
+        function populateComment($currentDB, $currentPostID)
+        {
+            $findCommentsQuery = "SELECT * FROM comment WHERE postID = $currentPostID ORDER BY id ASC";
+            $commentResult = mysqli_query($currentDB, $findCommentsQuery);
+            while ($commentData = mysqli_fetch_assoc($commentResult)) {
+                echo "<div>";
+                $commentBody = $commentData["body"];
+                $commentAuthorID = $commentData["authorID"];
+                //find comment author username
+                $findCommentAuthorQuery = "SELECT username FROM student WHERE id = $commentAuthorID";
+                $findCommentAuthorResult = mysqli_query($currentDB, $findCommentAuthorQuery) or die(mysqli_error($currentDB));
+                $authorName = mysqli_fetch_assoc($findCommentAuthorResult)["username"];
+                echo "<p style ='padding:0px;'><strong>From : $authorName</strong></p>";
+                echo "<p style ='padding:0px;'>$commentBody</p>";
+                echo "</div>";
+            }
         }
-    }
 
 
-    //fill out the page with posts
-    $getAllPostQuery = "SELECT * FROM threadpost WHERE groupID = $projectID";
-    $posts = mysqli_query($db, $getAllPostQuery) or die(mysqli_error($db));
-    while ($postData = mysqli_fetch_assoc($posts)) {
-        $body = $postData["body"];
-        $authorID = $postData["authorID"];
-        $findAuthorQuery = "SELECT username FROM student WHERE id = $authorID";
+        //fill out the page with posts
+        $getAllPostQuery = "SELECT * FROM threadpost WHERE groupID = $projectID";
+        $posts = mysqli_query($db, $getAllPostQuery) or die(mysqli_error($db));
+        while ($postData = mysqli_fetch_assoc($posts)) {
+            $body = $postData["body"];
+            $authorID = $postData["authorID"];
+            $findAuthorQuery = "SELECT username FROM student WHERE id = $authorID";
 
-        $findAuthorResult = mysqli_query($db, $findAuthorQuery) or die(mysqli_error($db));
-        $authorName = mysqli_fetch_assoc($findAuthorResult)["username"];
-        $postID = $postData['id'];
+            $findAuthorResult = mysqli_query($db, $findAuthorQuery) or die(mysqli_error($db));
+            $authorName = mysqli_fetch_assoc($findAuthorResult)["username"];
+            $postID = $postData['id'];
 
-        echo "<div class='postDiv'>
+            echo "<div class='postDiv'>
                 <div class='postBodyDiv'>
                     <h3>From : $authorName</h3>
                     <p>$body</p>
@@ -86,35 +90,39 @@ if (!isset($_SESSION["currentUser"])) {
                 <div class='interactionDiv'>
                     <h5>Comments:</h5>
                     <div class='commentDiv'>";
-        populateComment($db, $postID);
-        echo        "</div>";
-        // show interaction buttons to group memebers      
-        echo "      <div>";
-        if ($currentUser == 'guest') {
-            echo         "Log in to interact with this post!";
-        } else if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
-            echo        "<a href='addComment.php?postID=$postID'><button>Make Comment</button></a>
+            populateComment($db, $postID);
+            echo        "</div>";
+            // show interaction buttons to group memebers      
+            echo "      <div>";
+            if ($currentUser == 'guest') {
+                echo         "Log in to interact with this post!";
+            } else if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
+                echo        "<a href='addComment.php?postID=$postID'><button>Make Comment</button></a>
                         <button>Like</button>";
-        } else {
-            echo         "You need to be a member to leave comments! ";
+            } else {
+                echo         "You need to be a member to leave comments! ";
+            }
+            echo "      </div>";
+            echo    "</div>";
+            echo    "</div>";
         }
-        echo "      </div>";
-        echo    "</div>";
-        echo    "</div>";
+
+        if ($projectData["isClosed"]) {
+            echo "<p>this Project is closed!</p>";
+            if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
+                echo "<br> <p>Would you like to re-open it? </p> <form action='?action=reopen&projectID=$projectID' method='post'><input type='text' name='projectID' value='$projectID' hidden><button style='color: green;'>Reopen!</button></form> ";
+            }
+        } else if ($currentUser == 'guest') {
+            echo "Log in to make Post!";
+        } else if ($isCurrentUserMember) {
+            echo        "<br><button id='postButton'>Make Posts</button>";
+            echo "<a href='manageProject.php?projectID=$projectID'><button>Manage Project!</button></a>";
+        } else {
+            echo "You need to be a member to make post! ";
+        }
     }
 
-    if ($projectData["isClosed"]) {
-        echo "<p>this Project is closed!</p>";
-        if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
-            echo "<br> <p>Would you like to re-open it? </p> <form action='?action=reopen&projectID=$projectID' method='post'><input type='text' name='projectID' value='$projectID' hidden><button style='color: green;'>Reopen!</button></form> ";
-        }
-    } else if ($currentUser == 'guest') {
-        echo "Log in to make Post!";
-    } else if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
-        echo        "<button id='postButton'>Make Posts</button>";
-    } else {
-        echo "You need to be a member to make post! ";
-    }
+
     ?>
 
 

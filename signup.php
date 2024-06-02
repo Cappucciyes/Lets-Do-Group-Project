@@ -67,6 +67,8 @@
                 $query = "INSERT INTO student (username, password, firstName, lastName, email) values ('$newUsername', '$newPassword', '$inputFirstName', '$inputLastName', '$inputEmail')";
             }
             mysqli_query($db, $query) or die(mysqli_error($db));
+
+            header("Location: login.php");
         }
     }
     ?>
