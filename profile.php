@@ -15,10 +15,11 @@ if (!isset($_GET["student"])) {
 
 <head>
     <link rel="stylesheet" href="css/profile.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bodyMain.css">
 </head>
 
 <body>
-
 
     <div class="bodyMain">
         <div id="navBar" style="width: 100%; background-color: gray; text-align: center;">

@@ -21,28 +21,32 @@ $oldEmail = $userData['email'];
 
 <head>
     <link rel="stylesheet" href="css/form.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bodyMain.css">
 </head>
 
 <body>
-    <h1>Update Profile</h1>
-    <form action="" method="post" id="signupForm">
-        <div class="formBox">
-            <fieldset>
-                <legend>Personal Info: </legend>
-                <!-- https://stackoverflow.com/questions/20589723/populate-html-form-from-database: Populating form from database -->
-                <label for="firstName">First Name</label>
-                <input type="text" maxlength="255" name="firstName" value="<?php echo $oldFirstName ?>" required>
-                <br>
-                <label for="lastName">Last Name</label>
-                <input type="text" maxlength="255" name="lastName" value="<?php echo $oldLastName ?>" id="lastName" required>
-                <br>
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" value="<?php echo $oldEmail ?>">
-            </fieldset>
+    <div class="bodyMain">
+        <h1>Update Profile</h1>
+        <form action="" method="post" id="signupForm">
+            <div class="formBox">
+                <fieldset>
+                    <legend>Personal Info: </legend>
+                    <!-- https://stackoverflow.com/questions/20589723/populate-html-form-from-database: Populating form from database -->
+                    <label for="firstName">First Name</label>
+                    <input type="text" maxlength="255" name="firstName" value="<?php echo $oldFirstName ?>" required>
+                    <br>
+                    <label for="lastName">Last Name</label>
+                    <input type="text" maxlength="255" name="lastName" value="<?php echo $oldLastName ?>" id="lastName" required>
+                    <br>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" value="<?php echo $oldEmail ?>">
+                </fieldset>
 
-            <button type="submit" id="submitButton">Update Profile!</button>
-        </div>
-    </form>
+                <button type="submit" id="submitButton">Update Profile!</button>
+            </div>
+        </form>
+    </div>
 </body>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {

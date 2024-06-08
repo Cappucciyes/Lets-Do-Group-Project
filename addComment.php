@@ -16,34 +16,39 @@ if (!isset($_GET["postID"])) {
 
 <head>
     <link rel="stylesheet" href="css/form.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bodyMain.css">
 </head>
 
 <body>
-    <?php
-    $db = mysqli_connect('localhost', 'root', '') or die('Unable to connect. Check your connection parameters.');
-    mysqli_select_db($db, 'projectSite') or die(mysqli_error($db));
-    $postID = $_GET['postID'];
-    $query = "SELECT * FROM threadpost WHERE id =$postID ;";
-    $result = mysqli_query($db, $query) or die(mysqli_error($db));
-    $postData = mysqli_fetch_assoc($result);
-    $postOpenerID = $postData["authorID"];
+    <div class="bodyMain">
+        <?php
+        $db = mysqli_connect('localhost', 'root', '') or die('Unable to connect. Check your connection parameters.');
+        mysqli_select_db($db, 'projectSite') or die(mysqli_error($db));
+        $postID = $_GET['postID'];
+        $query = "SELECT * FROM threadpost WHERE id =$postID ;";
+        $result = mysqli_query($db, $query) or die(mysqli_error($db));
+        $postData = mysqli_fetch_assoc($result);
+        $postOpenerID = $postData["authorID"];
 
-    echo " <script>console.log('postID : , openerID = ')</script>";
+        echo " <script>console.log('postID : , openerID = ')</script>";
 
 
-    $query = "SELECT username FROM student WHERE student.id = '$postOpenerID'";
-    $result = mysqli_query($db, $query) or die(mysqli_error($db));
-    $postOpener = mysqli_fetch_assoc($result)["username"];
+        $query = "SELECT username FROM student WHERE student.id = '$postOpenerID'";
+        $result = mysqli_query($db, $query) or die(mysqli_error($db));
+        $postOpener = mysqli_fetch_assoc($result)["username"];
 
-    echo "<h3>Write what you want to say to $postOpener!</h3>"; ?>
+        echo "<h3>Write what you want to say to $postOpener!</h3>"; ?>
 
-    <form action="" method="post" id="commentForm">
-        <div class="formBox">
-            <label for="body"></label>
-            <input type="textarea" name="body" required>
-            <input type="submit" value="Post Comment!">
-        </div>
-    </form>
+        <form action="" method="post" id="commentForm">
+            <div class="formBox">
+                <label for="body"></label>
+                <input type="textarea" name="body" required>
+                <input type="submit" value="Post Comment!">
+            </div>
+        </form>
+    </div>
+
 </body>
 
 </html>

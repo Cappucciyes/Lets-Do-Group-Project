@@ -5,7 +5,7 @@
     translate: 50%;
 }
 
-@media all and (max-width : 360) {
+@media screen and (max-width : 500px) {
     .bodyMain {
         width: 100%;
         border: 1px blue solid;
