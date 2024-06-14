@@ -1,0 +1,17 @@
+#navBar {
+    width: 100%;
+    background-color: lightgray;
+    text-align: center;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#navBar>a {
+    padding: 0.5rem;
+}
+
+#navBar>a:hover {
+    padding-bottom: 0;
+    border-bottom: solid black 0.5rem;
+}

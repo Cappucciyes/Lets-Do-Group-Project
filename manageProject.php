@@ -34,9 +34,8 @@ if (!isset($_GET["projectID"])) {
 
 <body>
     <div class="bodyMain">
+        <?php include "navbar.php"; ?>
         <h1>Managing Projects</h1>
-
-
         <h2>Manage Members!</h2>
         <?php
         $findAllMembersQuery = "SELECT * FROM student WHERE id IN (SELECT memberID FROM projectmembers WHERE groupID = '$groupID')";

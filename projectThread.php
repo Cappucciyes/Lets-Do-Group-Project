@@ -24,6 +24,7 @@ if (!isset($_SESSION["currentUser"])) {
 
 <body>
     <div class="bodyMain">
+        <?php include "navbar.php"; ?>
         This is thread page for project
         <?php
         $db = mysqli_connect('localhost', 'root', '') or die('Unable to connect. Check your connection parameters.');
@@ -126,7 +127,8 @@ if (!isset($_SESSION["currentUser"])) {
         }
 
 
-        ?></div>
+        ?>
+    </div>
 
 
 
@@ -150,7 +152,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
         header("Location: projectThread.php?projectID=$projectID");
         die();
-    } else if ($_GET["action"] == 'like') { // to do
     }
 }
 ?>

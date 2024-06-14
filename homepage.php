@@ -4,27 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="css/bodyMain.css">
+
 </head>
 
 <body>
     <div class="bodyMain">
-        <div id="navBar" style="width: 100%; background-color: gray; text-align: center;">
-            <a href="homepage.php">Homepage</a>
-            <?php
-            session_start();
-
-
-            if (!isset($_SESSION["currentUser"])) {
-                echo  "<a href='login.php'>Log in</a>
-                    <a href='signup.php'>Sign up</a>";
-            } else {
-                $currentUserID = $_SESSION["currentUser"];
-                echo " <a href='profile.php?student=$currentUserID'>Profile</a>
-                    <a href='logout.php'>Log Out</a>";
-            }
-            ?>
-
-        </div>
+        <?php include "navbar.php"; ?>
 
         <div id="homepageBody">
             <div id="bodyLeft">

@@ -22,19 +22,7 @@ if (!isset($_GET["student"])) {
 <body>
 
     <div class="bodyMain">
-        <div id="navBar" style="width: 100%; background-color: gray; text-align: center;">
-            <a href="homepage.php">Homepage</a>
-            <?php
-            if (!isset($_SESSION["currentUser"])) {
-                $currentUserID = $_SESSION["currentUser"];
-                echo " <a href='profile.php?student=$currentUserID'>Profile</a>
-                    <a href='logout.php'>Log Out</a>";
-            } else {
-            }
-            ?>
-            <a href="login.php">Log in</a>
-            <a href="signup.php">Sign up</a>
-        </div>
+        <?php include "navbar.php"; ?>
         <div id="bodyTop">
             <?php
 
