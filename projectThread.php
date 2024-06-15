@@ -101,8 +101,7 @@ if (!isset($_SESSION["currentUser"])) {
                 if ($currentUser == 'guest') {
                     echo         "Log in to interact with this post!";
                 } else if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM projectmembers WHERE groupID = $projectID AND memberID=$currentUser")) > 0) {
-                    echo        "<a href='addComment.php?postID=$postID'><button>Make Comment</button></a>
-                        <button>Like</button>";
+                    echo        "<a href='addComment.php?postID=$postID'><button>Make Comment</button></a>";
                 } else {
                     echo         "You need to be a member to leave comments! ";
                 }

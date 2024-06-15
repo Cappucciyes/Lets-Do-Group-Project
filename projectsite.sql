@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- 생성 시간: 24-06-01 13:09
--- 서버 버전: 10.4.32-MariaDB
--- PHP 버전: 8.2.12
+-- Generation Time: Jun 15, 2024 at 04:16 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 데이터베이스: `projectsite`
+-- Database: `projectsite`
 --
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE `comment` (
@@ -35,7 +35,7 @@ CREATE TABLE `comment` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 테이블의 덤프 데이터 `comment`
+-- Dumping data for table `comment`
 --
 
 INSERT INTO `comment` (`id`, `authorID`, `postID`, `body`) VALUES
@@ -48,12 +48,14 @@ INSERT INTO `comment` (`id`, `authorID`, `postID`, `body`) VALUES
 (7, 1, 4, 'psotp'),
 (8, 1, 4, 'postpso'),
 (10, 10, 5, 'works pretty well'),
-(11, 1, 6, 'though I have to say good bye');
+(11, 1, 6, 'though I have to say good bye'),
+(12, 1, 9, 'works fine'),
+(13, 10, 9, 'looks good to me');
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `invite`
+-- Table structure for table `invite`
 --
 
 CREATE TABLE `invite` (
@@ -64,10 +66,17 @@ CREATE TABLE `invite` (
   `receivedID` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `invite`
+--
+
+INSERT INTO `invite` (`id`, `authorID`, `groupID`, `body`, `receivedID`) VALUES
+(17, 8, 15, 'You are invited', 1);
+
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `likes`
+-- Table structure for table `likes`
 --
 
 CREATE TABLE `likes` (
@@ -79,7 +88,7 @@ CREATE TABLE `likes` (
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `project`
+-- Table structure for table `project`
 --
 
 CREATE TABLE `project` (
@@ -92,21 +101,24 @@ CREATE TABLE `project` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 테이블의 덤프 데이터 `project`
+-- Dumping data for table `project`
 --
 
 INSERT INTO `project` (`id`, `opener`, `name`, `isPublic`, `isClosed`, `dueDate`) VALUES
 (1, 5, 'testProject', 0, 0, NULL),
-(2, 1, 'testProject1', 0, 1, NULL),
+(2, 1, 'testProject1', 0, 0, NULL),
 (3, 1, 'testProject2', 0, 0, NULL),
-(4, 1, 'test3', 1, 0, NULL),
+(4, 1, 'test3', 1, 1, NULL),
 (11, 1, 'PleaseWhy', 1, 0, '2024-05-30'),
-(12, 10, 'testestest', 1, 0, '2024-05-31');
+(12, 10, 'testestest', 1, 0, '2024-05-31'),
+(13, 1, 'Arranged Party', 0, 0, NULL),
+(14, 1, 'Boxy Box', 0, 0, NULL),
+(15, 8, 'blah', 1, 0, NULL);
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `projectmembers`
+-- Table structure for table `projectmembers`
 --
 
 CREATE TABLE `projectmembers` (
@@ -116,24 +128,29 @@ CREATE TABLE `projectmembers` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 테이블의 덤프 데이터 `projectmembers`
+-- Dumping data for table `projectmembers`
 --
 
 INSERT INTO `projectmembers` (`id`, `groupID`, `memberID`) VALUES
 (1, 2, 1),
-(2, 3, 1),
+(34, 11, 11),
 (3, 4, 1),
 (4, 1, 5),
 (6, 11, 1),
 (7, 12, 10),
 (8, 4, 10),
 (9, 11, 10),
-(30, 3, 10);
+(30, 3, 10),
+(31, 13, 1),
+(33, 13, 10),
+(36, 2, 10),
+(37, 14, 1),
+(38, 15, 8);
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `student`
+-- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
@@ -146,11 +163,11 @@ CREATE TABLE `student` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 테이블의 덤프 데이터 `student`
+-- Dumping data for table `student`
 --
 
 INSERT INTO `student` (`id`, `username`, `password`, `firstName`, `lastName`, `email`) VALUES
-(1, 'test', '1234', 'Bob', 'Test', 'good@email.com'),
+(1, 'test', '1234', 'Bobby', 'Test', 'good@email.com'),
 (9, 'test4', '4444', 'Bob', 'Lee', NULL),
 (8, 'test3', '3333', 'Bob', 'Lee', NULL),
 (5, 'test2', '123', 'Bob', 'Lee', NULL),
@@ -164,7 +181,7 @@ INSERT INTO `student` (`id`, `username`, `password`, `firstName`, `lastName`, `e
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `threadpost`
+-- Table structure for table `threadpost`
 --
 
 CREATE TABLE `threadpost` (
@@ -175,7 +192,7 @@ CREATE TABLE `threadpost` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 테이블의 덤프 데이터 `threadpost`
+-- Dumping data for table `threadpost`
 --
 
 INSERT INTO `threadpost` (`id`, `groupID`, `authorID`, `body`) VALUES
@@ -185,99 +202,102 @@ INSERT INTO `threadpost` (`id`, `groupID`, `authorID`, `body`) VALUES
 (4, 4, 1, 'I think there are better ways to do this man'),
 (5, 4, 10, 'Is the post working or not'),
 (6, 11, 1, 'remember me'),
-(7, 3, 1, 'postyPost');
+(7, 3, 1, 'postyPost'),
+(8, 13, 1, 'ba'),
+(9, 2, 1, 'testPot'),
+(10, 15, 8, 'hahaha');
 
 --
--- 덤프된 테이블의 인덱스
+-- Indexes for dumped tables
 --
 
 --
--- 테이블의 인덱스 `comment`
+-- Indexes for table `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`);
 
 --
--- 테이블의 인덱스 `invite`
+-- Indexes for table `invite`
 --
 ALTER TABLE `invite`
   ADD PRIMARY KEY (`id`);
 
 --
--- 테이블의 인덱스 `likes`
+-- Indexes for table `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`);
 
 --
--- 테이블의 인덱스 `project`
+-- Indexes for table `project`
 --
 ALTER TABLE `project`
   ADD PRIMARY KEY (`id`);
 
 --
--- 테이블의 인덱스 `projectmembers`
+-- Indexes for table `projectmembers`
 --
 ALTER TABLE `projectmembers`
   ADD PRIMARY KEY (`id`);
 
 --
--- 테이블의 인덱스 `student`
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`id`);
 
 --
--- 테이블의 인덱스 `threadpost`
+-- Indexes for table `threadpost`
 --
 ALTER TABLE `threadpost`
   ADD PRIMARY KEY (`id`);
 
 --
--- 덤프된 테이블의 AUTO_INCREMENT
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- 테이블의 AUTO_INCREMENT `comment`
+-- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- 테이블의 AUTO_INCREMENT `invite`
+-- AUTO_INCREMENT for table `invite`
 --
 ALTER TABLE `invite`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- 테이블의 AUTO_INCREMENT `likes`
+-- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- 테이블의 AUTO_INCREMENT `project`
+-- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- 테이블의 AUTO_INCREMENT `projectmembers`
+-- AUTO_INCREMENT for table `projectmembers`
 --
 ALTER TABLE `projectmembers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- 테이블의 AUTO_INCREMENT `student`
+-- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- 테이블의 AUTO_INCREMENT `threadpost`
+-- AUTO_INCREMENT for table `threadpost`
 --
 ALTER TABLE `threadpost`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
